@@ -24,17 +24,12 @@ namespace socket
     /// </summary>
     public partial class MainWindow : Window
     {
+        int port;
         public MainWindow()
         {
             InitializeComponent();
-        }
 
-        private void btnCreaSocket_Click(object sender, RoutedEventArgs e)
-        {
-            IPEndPoint sourceSocket = new IPEndPoint(IPAddress.Parse("10.73.0.21"), 56000);
-
-            btnInvia.IsEnabled = true;
-
+            IPEndPoint sourceSocket = new IPEndPoint(IPAddress.Parse(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString()), port);
             Thread ricezione = new Thread(new ParameterizedThreadStart(SocketRecieve));
             ricezione.Start(sourceSocket);
         }
@@ -42,12 +37,26 @@ namespace socket
         private void btnInvia_Click(object sender, RoutedEventArgs e)
         {
             string ipAddress = txtIp.Text;
-            int port = int.Parse(txtport.Text);
 
             //Necessari controlli sul contenuto delle textbox
             //if(CorrectIp(ipAddress) && CorrectPort(port))
 
             SocketSend(IPAddress.Parse(ipAddress), port, txtMessage.Text);
+        }
+
+        private void txtPort_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(txtPort.Text.Length > 0)
+            {
+                try
+                {
+                    port = int.Parse(txtPort.Text);
+                }
+                catch (Exception exe)
+                {
+                    MessageBox.Show(exe.Message, "Errore");
+                }
+            }
         }
 
         public async void SocketRecieve(object socketSource)

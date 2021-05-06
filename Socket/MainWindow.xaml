@@ -5,16 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:socket"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Socket Message" Height="550" Width="800">
     <Grid>
-        <TextBox x:Name="txtport" HorizontalAlignment="Left" Height="65" Margin="283,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171"/>
-        <Button x:Name="btnCreaSocket" Content="Crea Socket" HorizontalAlignment="Left" Margin="597,44,0,0" VerticalAlignment="Top" Width="115" Height="42" Click="btnCreaSocket_Click"/>
-        <TextBox x:Name="txtIp" HorizontalAlignment="Left" Height="65" Margin="47,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171"/>
-        <TextBlock HorizontalAlignment="Left" Margin="47,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Indirizzo IP"/><LineBreak/><Run/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="283,7,0,0" TextWrapping="Wrap" Text="Port" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtMessage" HorizontalAlignment="Left" Height="80" Margin="118,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="165"/>
-        <Button x:Name="btnInvia" Content="Invia" HorizontalAlignment="Left" Margin="147,325,0,0" VerticalAlignment="Top" Width="100" Height="48" IsEnabled="False" Click="btnInvia_Click"/>
-        <Label x:Name="lblRicevi" Content="" HorizontalAlignment="Left" Margin="532,128,0,0" VerticalAlignment="Top" Height="281" Width="250"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="86*"/>
+            <RowDefinition Height="103*"/>
+            <RowDefinition Height="330*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Background="LightGray" Orientation="Vertical" Grid.Column="0" Grid.Row="0">
+            <TextBlock Text="IP Destinatario" FontWeight="Bold"  Margin="30, 0" FontSize="20"/>
+            <TextBox x:Name="txtIp" HorizontalAlignment="Center" Background="SteelBlue" FontSize="30" TextAlignment="Center" Height="48" TextWrapping="Wrap" VerticalAlignment="Top" Width="244" Margin="10,0"/>
+        </StackPanel>
+
+        <StackPanel Background="LightGray" Orientation="Vertical" Grid.Column="0" Grid.Row="1">
+            <TextBlock Text="Porta Destinatario" FontWeight="Bold"  Margin="30, 0" FontSize="20"/>
+            <TextBox x:Name="txtPort" HorizontalAlignment="Center" Background="SteelBlue" FontSize="30" TextAlignment="Center" Height="48" TextWrapping="Wrap" VerticalAlignment="Top" Width="244" Margin="10,0" TextChanged="txtPort_TextChanged" />
+        </StackPanel>
+
+        <StackPanel Background="LightGray" Orientation="Vertical" Grid.Column="0" Grid.Row="2">
+            <TextBlock Text="Contacts History" FontWeight="Bold"  Margin="30, 0" FontSize="20"/>
+            <ListBox x:Name="lstContact" Margin="5" Background="SteelBlue" Height="290"/>
+        </StackPanel>
+
+        <TextBox x:Name="txtMessage" HorizontalAlignment="Left" Height="80" Margin="157,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="165" Grid.Row="2" Grid.Column="1"/>
+        <Button x:Name="btnInvia" Content="Invia" HorizontalAlignment="Left" Margin="157,135,0,0" VerticalAlignment="Top" Width="100" Height="48" IsEnabled="False" Click="btnInvia_Click" Grid.Row="2" Grid.Column="1"/>
+        <Label x:Name="lblRicevi" Content="" HorizontalAlignment="Left" Margin="268,42,0,0" VerticalAlignment="Top" Height="281" Width="250" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>
