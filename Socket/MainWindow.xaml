@@ -20,12 +20,12 @@
 
         <StackPanel Background="LightGray" Orientation="Vertical" Grid.Column="0" Grid.Row="0" Margin="5, 5, 0, 0">
             <TextBlock Text="IP Destinatario" FontWeight="Bold"  Margin="30, 0" FontSize="20"/>
-            <TextBox x:Name="txtIp" HorizontalAlignment="Center" Background="SteelBlue" FontSize="30" TextAlignment="Center" Height="48" TextWrapping="Wrap" VerticalAlignment="Top" Width="244" Margin="10,0"/>
+            <TextBox x:Name="txtIp" HorizontalAlignment="Center" Background="SteelBlue" FontSize="30" TextAlignment="Center" Height="48" TextWrapping="Wrap" VerticalAlignment="Top" Width="244" Margin="10,0" TextChanged="txtIp_TextChanged"/>
         </StackPanel>
 
         <StackPanel Background="LightGray" Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="5, 5, 0, 0">
             <TextBlock Text="Porta Destinatario" FontWeight="Bold"  Margin="30, 0" FontSize="20"/>
-            <TextBox x:Name="txtPort" HorizontalAlignment="Center" Background="SteelBlue" FontSize="30" TextAlignment="Center" Height="48" TextWrapping="Wrap" VerticalAlignment="Top" Width="244" Margin="10,0" TextChanged="txtPort_TextChanged" />
+            <TextBox x:Name="txtPort" HorizontalAlignment="Center" Background="SteelBlue" FontSize="30" TextAlignment="Center" Height="48" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="5" Width="244" Margin="10,0" TextChanged="txtPort_TextChanged"/>
         </StackPanel>
 
         <StackPanel Background="LightGray" Orientation="Vertical" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Margin="5, 5, 0, 5">
@@ -34,14 +34,12 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" Margin="5, 0">
-            <TextBox x:Name="txtMessage" HorizontalAlignment="Left" VerticalAlignment="Top" Width="477" Height="28" FontSize="20" MaxLength="240" Background="SteelBlue"/>
+            <TextBox x:Name="txtMessage" HorizontalAlignment="Left" VerticalAlignment="Top" Width="477" Height="28" FontSize="20" MaxLength="45" Background="SteelBlue"/>
             <Button x:Name="btnInvia" Content="Send" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Height="28" IsEnabled="False" Click="btnInvia_Click" Background="DimGray" Foreground="WhiteSmoke"/>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="3">
-            <ListBox x:Name="lstRicevi" HorizontalAlignment="Center" VerticalAlignment="Center" Width="524" Height="492" Background="LightSteelBlue"/>
+        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Margin="0, 5, 0, 5">
+            <ListBox x:Name="lstRicevi" HorizontalAlignment="Center" VerticalAlignment="Center" Width="525" Height="492" Background="LightSteelBlue" FontSize="20"/>
         </StackPanel>
-
-
     </Grid>
 </Window>

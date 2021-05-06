@@ -25,37 +25,65 @@ namespace socket
     public partial class MainWindow : Window
     {
         int port;
+        string recieverIP;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            IPEndPoint sourceSocket = new IPEndPoint(IPAddress.Parse(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString()), port);
+            IPEndPoint sourceSocket = new IPEndPoint(IPAddress.Parse(Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString()), 56000);
             Thread ricezione = new Thread(new ParameterizedThreadStart(SocketRecieve));
             ricezione.Start(sourceSocket);
         }
 
         private void btnInvia_Click(object sender, RoutedEventArgs e)
         {
-            string ipAddress = txtIp.Text;
+            SocketSend(IPAddress.Parse(recieverIP), port, txtMessage.Text);
+        }
 
-            //Necessari controlli sul contenuto delle textbox
-            //if(CorrectIp(ipAddress) && CorrectPort(port))
+        private void txtIp_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(txtIp.Text.Split('.').Length == 4 && txtIp.Text.Split('.')[3] != "")
+            {
+                btnInvia.IsEnabled = false;
+                try
+                {
+                    IPAddress.Parse(txtIp.Text);
+                    recieverIP = txtIp.Text;
+                }
+                catch (Exception exe)
+                {
+                    MessageBox.Show(exe.Message, "Errore");
+                }
 
-            SocketSend(IPAddress.Parse(ipAddress), port, txtMessage.Text);
+                if (port != 0)
+                    btnInvia.IsEnabled = true;
+            }
         }
 
         private void txtPort_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(txtPort.Text.Length > 0)
             {
+                btnInvia.IsEnabled = false;
                 try
                 {
                     port = int.Parse(txtPort.Text);
+                    if (port > 65535)
+                    {
+                        MessageBox.Show("Valore della porta non valido");
+                        port = 0;
+                        return;
+                    }
                 }
                 catch (Exception exe)
                 {
                     MessageBox.Show(exe.Message, "Errore");
+                    txtPort.Text = txtPort.Text.Remove(txtPort.Text.Length - 1);
                 }
+
+                if (recieverIP != null)
+                    btnInvia.IsEnabled = true;
             }
         }
 
@@ -76,9 +104,9 @@ namespace socket
                 {
                     if(t.Available > 0)
                     {
-                        message = "";
+                        message = ipEndP.Address.ToString() + ": ";
                         bytes = t.Receive(bytesRicevuti, bytesRicevuti.Length, 0);
-                        message += Encoding.ASCII.GetString(bytesRicevuti, 0, bytes);
+                        message += Encoding.UTF8.GetString(bytesRicevuti, 0, bytes);
 
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
@@ -91,7 +119,7 @@ namespace socket
 
         public void SocketSend(IPAddress dest, int destPort, string message)
         {
-            Byte[] byteInviati = Encoding.ASCII.GetBytes(message);
+            Byte[] byteInviati = Encoding.UTF8.GetBytes(message);
             Socket s = new Socket(dest.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
             IPEndPoint remoteEndPoint = new IPEndPoint(dest, destPort);
 
