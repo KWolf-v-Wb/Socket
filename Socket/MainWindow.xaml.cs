@@ -82,7 +82,7 @@ namespace socket
 
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            lblRicevi.Content = message;
+                            lstRicevi.Items.Add(message);
                         }));
                     }
                 }
