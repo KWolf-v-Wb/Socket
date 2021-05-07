@@ -38,7 +38,12 @@ namespace socket
 
         private void btnInvia_Click(object sender, RoutedEventArgs e)
         {
-            SocketSend(IPAddress.Parse(recieverIP), port, txtMessage.Text);
+            if(txtMessage.Text.Length > 0)
+            {
+                SocketSend(IPAddress.Parse(recieverIP), port, txtMessage.Text);
+                lstContact.Items.Add(recieverIP + ":" + port);
+                txtMessage.Text = "";
+            }
         }
 
         private void txtIp_TextChanged(object sender, TextChangedEventArgs e)
@@ -87,6 +92,14 @@ namespace socket
             }
         }
 
+        private void lstContact_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string[] contact = lstContact.SelectedItem.ToString().Split(':');
+
+            txtIp.Text = contact[0];
+            txtPort.Text = contact[1];
+        }
+
         public async void SocketRecieve(object socketSource)
         {
             IPEndPoint ipEndP = (IPEndPoint)socketSource;
@@ -104,7 +117,7 @@ namespace socket
                 {
                     if(t.Available > 0)
                     {
-                        message = ipEndP.Address.ToString() + ": ";
+                        message = "";
                         bytes = t.Receive(bytesRicevuti, bytesRicevuti.Length, 0);
                         message += Encoding.UTF8.GetString(bytesRicevuti, 0, bytes);
 
@@ -119,7 +132,7 @@ namespace socket
 
         public void SocketSend(IPAddress dest, int destPort, string message)
         {
-            Byte[] byteInviati = Encoding.UTF8.GetBytes(message);
+            Byte[] byteInviati = Encoding.UTF8.GetBytes(Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString() + ": " + message);
             Socket s = new Socket(dest.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
             IPEndPoint remoteEndPoint = new IPEndPoint(dest, destPort);
 
