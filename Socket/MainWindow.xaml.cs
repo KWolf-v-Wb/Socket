@@ -41,8 +41,16 @@ namespace socket
             if(txtMessage.Text.Length > 0)
             {
                 SocketSend(IPAddress.Parse(recieverIP), port, txtMessage.Text);
-                lstContact.Items.Add(recieverIP + ":" + port);
+                lstRicevi.Items.Add("Tu: " + txtMessage.Text);
                 txtMessage.Text = "";
+
+                string contatto = recieverIP + ":" + port;
+                bool nuovoContatto = true;
+                foreach (string s in lstContact.Items)
+                    if (contatto == s)
+                        nuovoContatto = false;
+                if (nuovoContatto)
+                    lstContact.Items.Add(contatto);
             }
         }
 
@@ -62,7 +70,10 @@ namespace socket
                 }
 
                 if (port != 0)
+                {
                     btnInvia.IsEnabled = true;
+                    lstRicevi.Items.Clear();
+                }
             }
         }
 
@@ -88,7 +99,10 @@ namespace socket
                 }
 
                 if (recieverIP != null)
+                {
                     btnInvia.IsEnabled = true;
+                    lstRicevi.Items.Clear();
+                }
             }
         }
 
