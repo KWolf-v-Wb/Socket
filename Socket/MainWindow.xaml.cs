@@ -31,6 +31,8 @@ namespace socket
         {
             InitializeComponent();
 
+            //Inizializzazione del thread in ricezione recuperando l'IP dell'host e utilizzando una porta statica
+
             IPEndPoint sourceSocket = new IPEndPoint(IPAddress.Parse(Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString()), 56000);
             Thread ricezione = new Thread(new ParameterizedThreadStart(SocketRecieve));
             ricezione.Start(sourceSocket);
@@ -38,6 +40,9 @@ namespace socket
 
         private void btnInvia_Click(object sender, RoutedEventArgs e)
         {
+            //Invio del messaggio specificato in txtMessage al destinatario con socket specificato in txtIp e txtPort
+            //Aggiunta del contatto alla lstContacts in caso non sia presente
+
             if(txtMessage.Text.Length > 0)
             {
                 SocketSend(IPAddress.Parse(recieverIP), port, txtMessage.Text);
@@ -46,16 +51,19 @@ namespace socket
 
                 string contatto = recieverIP + ":" + port;
                 bool nuovoContatto = true;
-                foreach (string s in lstContact.Items)
+                foreach (string s in lstContacts.Items)
                     if (contatto == s)
                         nuovoContatto = false;
                 if (nuovoContatto)
-                    lstContact.Items.Add(contatto);
+                    lstContacts.Items.Add(contatto);
             }
         }
 
         private void txtIp_TextChanged(object sender, TextChangedEventArgs e)
         {
+            //Verifica della correttezza dell'Ip (avviene solo quando si è inserito il primo valore dopo l'ultimo punto del codice)
+            //Abilitazione di btnInvia nel caso in cui la porta sia già stata inserita
+
             if(txtIp.Text.Split('.').Length == 4 && txtIp.Text.Split('.')[3] != "")
             {
                 btnInvia.IsEnabled = false;
@@ -72,14 +80,16 @@ namespace socket
                 if (port != 0)
                 {
                     btnInvia.IsEnabled = true;
-                    lstRicevi.Items.Clear();
                 }
             }
         }
 
         private void txtPort_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(txtPort.Text.Length > 0)
+            //Verifica della correttezza della porta
+            //Abilitazione di btnInvia nel caso in cui sia già stato inserito l'Ip
+
+            if (txtPort.Text.Length > 0)
             {
                 btnInvia.IsEnabled = false;
                 try
@@ -101,14 +111,15 @@ namespace socket
                 if (recieverIP != null)
                 {
                     btnInvia.IsEnabled = true;
-                    lstRicevi.Items.Clear();
                 }
             }
         }
 
         private void lstContact_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string[] contact = lstContact.SelectedItem.ToString().Split(':');
+            //Modifica del socket, composto da txtIp e txtPort, con i dati del contatto selezionato in lstContacts
+
+            string[] contact = lstContacts.SelectedItem.ToString().Split(':');
 
             txtIp.Text = contact[0];
             txtPort.Text = contact[1];
@@ -116,6 +127,10 @@ namespace socket
 
         public async void SocketRecieve(object socketSource)
         {
+            //Codice assegnato al thread in ricezione
+            //Controlla la presenza di messaggi in arrivo 
+            //Nel caso ne trovi uno, lo decodifica e inserisce in lstRicevi
+
             IPEndPoint ipEndP = (IPEndPoint)socketSource;
 
             Socket t = new Socket(ipEndP.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
@@ -146,6 +161,8 @@ namespace socket
 
         public void SocketSend(IPAddress dest, int destPort, string message)
         {
+            //Transforma in binario il messaggio da inviare e lo invia al destinatario
+
             Byte[] byteInviati = Encoding.UTF8.GetBytes(Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString() + ": " + message);
             Socket s = new Socket(dest.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
             IPEndPoint remoteEndPoint = new IPEndPoint(dest, destPort);
