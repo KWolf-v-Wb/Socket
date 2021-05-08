@@ -64,9 +64,9 @@ namespace socket
             //Verifica della correttezza dell'Ip (avviene solo quando si è inserito il primo valore dopo l'ultimo punto del codice)
             //Abilitazione di btnInvia nel caso in cui la porta sia già stata inserita
 
-            if(txtIp.Text.Split('.').Length == 4 && txtIp.Text.Split('.')[3] != "")
+            btnInvia.IsEnabled = false;
+            if (txtIp.Text.Split('.').Length == 4 && txtIp.Text.Split('.')[3] != "")
             {
-                btnInvia.IsEnabled = false;
                 try
                 {
                     IPAddress.Parse(txtIp.Text);

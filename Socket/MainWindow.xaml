@@ -13,24 +13,24 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="89*"/>
-            <RowDefinition Height="107*"/>
+            <RowDefinition Height="89*"/>
             <RowDefinition Height="304*"/>
             <RowDefinition Height="36*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Background="LightGray" Orientation="Vertical" Grid.Column="0" Grid.Row="0" Margin="5, 5, 0, 0">
-            <TextBlock Text="IP Destinatario" FontWeight="Bold"  Margin="30, 0" FontSize="20"/>
+            <TextBlock Text="IP Destinatario" FontWeight="Bold" HorizontalAlignment="Center"  Margin="30, 0" FontSize="20"/>
             <TextBox x:Name="txtIp" HorizontalAlignment="Center" Background="SteelBlue" BorderBrush="Black" BorderThickness="3" FontSize="30" TextAlignment="Center" Height="48" TextWrapping="Wrap" VerticalAlignment="Top" Width="244" Margin="10,0" TextChanged="txtIp_TextChanged"/>
         </StackPanel>
 
         <StackPanel Background="LightGray" Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="5, 5, 0, 0">
-            <TextBlock Text="Porta Destinatario" FontWeight="Bold"  Margin="30, 0" FontSize="20"/>
+            <TextBlock Text="Porta Destinatario" FontWeight="Bold" HorizontalAlignment="Center" Margin="30, 0" FontSize="20"/>
             <TextBox x:Name="txtPort" HorizontalAlignment="Center" Background="SteelBlue" BorderBrush="Black" BorderThickness="3" FontSize="30" TextAlignment="Center" Height="48" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="5" Width="244" Margin="10,0" TextChanged="txtPort_TextChanged"/>
         </StackPanel>
 
         <StackPanel Background="LightGray" Orientation="Vertical" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Margin="5, 5, 0, 5">
-            <TextBlock Text="Contacts History" FontWeight="Bold"  Margin="30, 0" FontSize="20"/>
-            <ListBox x:Name="lstContacts" Margin="5" Background="SteelBlue" BorderBrush="Black" BorderThickness="3" Height="290" FontSize="18" SelectionChanged="lstContact_SelectionChanged" MouseRightButtonDown="list_MouseRightButtonDown"/>
+            <TextBlock Text="Contacts History" FontWeight="Bold" HorizontalAlignment="Center" Margin="30, 0" FontSize="20"/>
+            <ListBox x:Name="lstContacts" Margin="5" Background="SteelBlue" BorderBrush="Black" BorderThickness="3" Width="244" Height="290" FontSize="18" SelectionChanged="lstContact_SelectionChanged" MouseRightButtonDown="list_MouseRightButtonDown"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" Margin="5, 0">
