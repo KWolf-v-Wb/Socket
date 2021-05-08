@@ -125,6 +125,17 @@ namespace socket
             txtPort.Text = contact[1];
         }
 
+        private void list_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Elimina i dati contenuti nella lista sui cui si è chiamato il metodo
+
+            ListBox s = (ListBox)sender;
+            MessageBoxResult answer = MessageBox.Show("Sei sicuro di voler cancellare il contenuto di questa lista?", "Richiesta di conferma", MessageBoxButton.YesNo);
+
+            if(answer == MessageBoxResult.Yes)
+                s.Items.Clear();
+        }
+
         public async void SocketRecieve(object socketSource)
         {
             //Codice assegnato al thread in ricezione

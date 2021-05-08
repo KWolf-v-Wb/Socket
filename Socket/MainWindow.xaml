@@ -30,7 +30,7 @@
 
         <StackPanel Background="LightGray" Orientation="Vertical" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Margin="5, 5, 0, 5">
             <TextBlock Text="Contacts History" FontWeight="Bold"  Margin="30, 0" FontSize="20"/>
-            <ListBox x:Name="lstContacts" Margin="5" Background="SteelBlue" BorderBrush="Black" BorderThickness="3" Height="290" FontSize="18" SelectionChanged="lstContact_SelectionChanged"/>
+            <ListBox x:Name="lstContacts" Margin="5" Background="SteelBlue" BorderBrush="Black" BorderThickness="3" Height="290" FontSize="18" SelectionChanged="lstContact_SelectionChanged" MouseRightButtonDown="list_MouseRightButtonDown"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" Margin="5, 0">
@@ -39,7 +39,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Margin="5, 5, 0, 5">
-            <ListBox x:Name="lstRicevi" HorizontalAlignment="Left" VerticalAlignment="Center" Width="525" Height="492" Background="LightSteelBlue" FontSize="18"/>
+            <ListBox x:Name="lstRicevi" HorizontalAlignment="Left" VerticalAlignment="Center" Width="525" Height="492" Background="LightSteelBlue" FontSize="18" MouseRightButtonDown="list_MouseRightButtonDown"/>
         </StackPanel>
     </Grid>
 </Window>
